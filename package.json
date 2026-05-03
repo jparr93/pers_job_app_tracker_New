@@ -1,0 +1,15 @@
+{
+  "name": "chore-tracker",
+  "version": "1.0.0",
+  "description": "Household chore rotation tracker",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "cd client && npm install && npm run build",
+    "dev": "cd client && npm run dev"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
