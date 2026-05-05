@@ -48,22 +48,26 @@ export default function App() {
       </header>
 
       <main className="chores-container">
-        {CHORES.map(chore => {
-          const state = chores[chore.id];
-          const bgColor = COLORS[state.colorIndex];
+        <div className="chores-grid">
+          {CHORES.map(chore => {
+            const state = chores[chore.id];
+            const bgColor = COLORS[state.colorIndex];
 
-          return (
-            <button
-              key={chore.id}
-              className="chore-button"
-              style={{ backgroundColor: bgColor }}
-              onClick={() => handleChoreClick(chore.id)}
-            >
-              <div className="chore-name">{chore.name}</div>
-              <div className="chore-person">{state.person}</div>
-            </button>
-          );
-        })}
+            return (
+              <button
+                key={chore.id}
+                className="chore-button"
+                style={{ backgroundColor: bgColor }}
+                onClick={() => handleChoreClick(chore.id)}
+              >
+                <div className="chore-info">
+                  <div className="chore-name">{chore.name}</div>
+                  <div className="chore-person">{state.person}</div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </main>
     </div>
   );
