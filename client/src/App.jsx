@@ -10,10 +10,35 @@ const CHORES = [
 const PEOPLE = ['Joe', 'Zoe'];
 const COLORS = ['#4f46e5', '#ec4899']; // Indigo and Pink
 
+// Migrate old data structure to new one
+function migrateChoreData(data) {
+  if (!data) return null;
+  
+  const migrated = {};
+  for (const choreId in data) {
+    const oldChore = data[choreId];
+    migrated[choreId] = {
+      person: oldChore.person || 'Joe',
+      personIndex: oldChore.personIndex !== undefined ? oldChore.personIndex : 0,
+      colorIndex: oldChore.colorIndex !== undefined ? oldChore.colorIndex : 0,
+      completions: oldChore.completions || { Joe: 0, Zoe: 0 },
+      skips: oldChore.skips || { Joe: 0, Zoe: 0 }
+    };
+  }
+  return migrated;
+}
+
 export default function App() {
   const [chores, setChores] = useState(() => {
     const saved = localStorage.getItem('chores');
-    if (saved) return JSON.parse(saved);
+    if (saved) {
+      try {
+        const parsedData = JSON.parse(saved);
+        return migrateChoreData(parsedData);
+      } catch (e) {
+        console.error('Error parsing stored chores:', e);
+      }
+    }
     
     return CHORES.reduce((acc, chore) => {
       acc[chore.id] = {
