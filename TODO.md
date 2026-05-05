@@ -20,13 +20,13 @@
 - [ ] Click on date to view completed chores that day
 - [ ] Optional: Sync calendar events to Google Calendar when signed in
 
-### 4. Skip Turn Feature
-- [ ] Add "Skip Turn" button on each chore
-- [ ] When skipped, person stays on that chore for next rotation
-- [ ] Track skip events in localStorage
+### 4. Skip Turn Feature ✅
+- [x] Add "Skip Turn" button on each chore
+- [x] When skipped, person stays on that chore for next rotation
+- [x] Track skip events in localStorage
 
-### 5. Completion Tracking & Stats
-- [ ] Display completion counter per person per chore
+### 5. Completion Tracking & Stats ✅ (Partial)
+- [x] Display completion counter per person per chore
 - [ ] Show cumulative stats (e.g., "Joe: 24 completions total")
 - [ ] Add stats dashboard showing:
   - Times each person completed each chore
@@ -36,11 +36,11 @@
 
 ## Technical Tasks
 
-### Frontend
-- [ ] Update App.jsx state to include:
-  - Completion counts: `{ choreId: { Joe: 5, Zoe: 3 } }`
-  - Skip history: `{ choreId: { Joe: 2, Zoe: 1 } }`
-  - Completion dates: Track full history with timestamps
+### Frontend ✅ (Partial)
+- [x] Update App.jsx state to include:
+  - [x] Completion counts: `{ choreId: { Joe: 5, Zoe: 3 } }`
+  - [x] Skip tracking: `{ choreId: { Joe: 2, Zoe: 1 } }`
+  - [ ] Completion dates: Track full history with timestamps
 - [ ] Create Calendar.jsx component
 - [ ] Create StatsPanel.jsx component
 - [ ] Add Firebase configuration for optional Google auth

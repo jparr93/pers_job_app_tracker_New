@@ -19,7 +19,9 @@ export default function App() {
       acc[chore.id] = {
         person: 'Joe',
         personIndex: 0,
-        colorIndex: 0
+        colorIndex: 0,
+        completions: { Joe: 0, Zoe: 0 },
+        skips: { Joe: 0, Zoe: 0 }
       };
       return acc;
     }, {});
@@ -31,14 +33,43 @@ export default function App() {
   }, [chores]);
 
   const handleChoreClick = (choreId) => {
-    setChores(prev => ({
-      ...prev,
-      [choreId]: {
-        personIndex: (prev[choreId].personIndex + 1) % PEOPLE.length,
-        colorIndex: (prev[choreId].colorIndex + 1) % COLORS.length,
-        person: PEOPLE[(prev[choreId].personIndex + 1) % PEOPLE.length]
-      }
-    }));
+    setChores(prev => {
+      const currentPerson = prev[choreId].person;
+      const nextPersonIndex = (prev[choreId].personIndex + 1) % PEOPLE.length;
+      const nextPerson = PEOPLE[nextPersonIndex];
+      
+      return {
+        ...prev,
+        [choreId]: {
+          ...prev[choreId],
+          personIndex: nextPersonIndex,
+          colorIndex: (prev[choreId].colorIndex + 1) % COLORS.length,
+          person: nextPerson,
+          completions: {
+            ...prev[choreId].completions,
+            [currentPerson]: (prev[choreId].completions[currentPerson] || 0) + 1
+          }
+        }
+      };
+    });
+  };
+
+  const handleSkip = (e, choreId) => {
+    e.stopPropagation();
+    setChores(prev => {
+      const currentPerson = prev[choreId].person;
+      
+      return {
+        ...prev,
+        [choreId]: {
+          ...prev[choreId],
+          skips: {
+            ...prev[choreId].skips,
+            [currentPerson]: (prev[choreId].skips[currentPerson] || 0) + 1
+          }
+        }
+      };
+    });
   };
 
   return (
@@ -52,6 +83,7 @@ export default function App() {
           {CHORES.map(chore => {
             const state = chores[chore.id];
             const bgColor = COLORS[state.colorIndex];
+            const currentPersonCompletions = state.completions[state.person] || 0;
 
             return (
               <button
@@ -60,9 +92,18 @@ export default function App() {
                 style={{ backgroundColor: bgColor }}
                 onClick={() => handleChoreClick(chore.id)}
               >
-                <div className="chore-info">
-                  <div className="chore-name">{chore.name}</div>
-                  <div className="chore-person">{state.person}</div>
+                <div className="chore-button-row">
+                  <div className="chore-info">
+                    <div className="chore-name">{chore.name}</div>
+                    <div className="chore-person">{state.person}</div>
+                    <div className="chore-count">✓ {currentPersonCompletions}</div>
+                  </div>
+                  <button
+                    className="skip-btn"
+                    onClick={(e) => handleSkip(e, chore.id)}
+                  >
+                    Skip
+                  </button>
                 </div>
               </button>
             );
