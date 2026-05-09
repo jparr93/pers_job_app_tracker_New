@@ -99,7 +99,32 @@ export default function App() {
             ...prev[choreId].completions,
             [currentPerson]: (prev[choreId].completions[currentPerson] || 0) + 1
           }
-        }div className="header-content">
+        }
+      };
+    });
+  };
+
+  const handleSkip = (e, choreId) => {
+    e.stopPropagation();
+    setChores(prev => {
+      const currentPerson = prev[choreId].person;
+      return {
+        ...prev,
+        [choreId]: {
+          ...prev[choreId],
+          skips: {
+            ...prev[choreId].skips,
+            [currentPerson]: (prev[choreId].skips[currentPerson] || 0) + 1
+          }
+        }
+      };
+    });
+  };
+
+  return (
+    <div className="app">
+      <header className="header">
+        <div className="header-content">
           <h1>🏠 Chore Tracker</h1>
           <GoogleSignIn user={user} onUserChange={setUser} />
         </div>
@@ -168,7 +193,7 @@ export default function App() {
                 </div>
               </button>
             );
-          })}
+          
         </div>
       </main>
     </div>
