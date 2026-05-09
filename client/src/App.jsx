@@ -8,7 +8,7 @@ const CHORES = [
 ];
 
 const PEOPLE = ['Joe', 'Zoe'];
-const COLORS = ['#4f46e5', '#ec4899']; // Indigo and Pink
+const COLORS = ['#6366f1', '#f59e0b']; // Indigo for Joe, Amber for Zoe
 
 // Migrate old data structure to new one
 function migrateChoreData(data) {
