@@ -167,33 +167,7 @@ export default function App() {
         </div>
 
         <div className="calendar-section">
-          <Calendar user={user} />onst state = chores[chore.id];
-            const bgColor = COLORS[state.colorIndex];
-            const currentPersonCompletions = state.completions[state.person] || 0;
-
-            return (
-              <button
-                key={chore.id}
-                className="chore-button"
-                style={{ backgroundColor: bgColor }}
-                onClick={() => handleChoreClick(chore.id)}
-              >
-                <div className="chore-button-row">
-                  <div className="chore-info">
-                    <div className="chore-name">{chore.name}</div>
-                    <div className="chore-person">{state.person}</div>
-                    <div className="chore-count">✓ {currentPersonCompletions}</div>
-                  </div>
-                  <button
-                    className="skip-btn"
-                    onClick={(e) => handleSkip(e, chore.id)}
-                  >
-                    Skip
-                  </button>
-                </div>
-              </button>
-            );
-          
+          <Calendar user={user} />
         </div>
       </main>
     </div>
