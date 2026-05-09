@@ -40,11 +40,20 @@ body {
 .header {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: #f1f5f9;
-  padding: 2rem 1.5rem;
+  padding: 1.5rem;
   text-align: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   flex-shrink: 0;
   border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .header h1 {
@@ -55,23 +64,33 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  flex: 1;
+  text-align: left;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  overflow: hidden;
 }
 
 .chores-container {
   flex: 1;
-  padding: 2rem 1.5rem;
+  padding: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   overflow-y: auto;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .chores-grid {
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -233,14 +252,163 @@ body {
   background: rgba(99, 102, 241, 0.6);
 }
 
+/* Sections */
+.chores-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.calendar-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Google Sign-In Styles */
+.google-signin {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.signin-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #6366f1 0%, #f59e0b 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.95rem;
+}
+
+.signin-btn:hover {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+  transform: translateY(-2px);
+}
+
+.signin-btn:active {
+  transform: scale(0.98);
+}
+
+.signin-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.signin-btn.sign-out {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.85rem;
+  background: rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.5);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(99, 102, 241, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #f1f5f9;
+  font-size: 0.9rem;
+}
+
+.user-email {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.signin-error {
+  color: #ef4444;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 4px;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Calendar Styles */
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.calendar-header {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+  flex-shrink: 0;
+}
+
+.calendar-header h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0;
+}
+
+.calendar-wrapper {
+  flex: 1;
+  overflow: auto;
+}
+
+.google-calendar-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.calendar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #94a3b8;
+  font-size: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
 /* Tablets and larger */
 @media (min-width: 768px) {
   .header h1 {
     font-size: 3rem;
-  }
-
-  .chores-container {
-    padding: 3rem 2rem;
   }
 
   .chore-button {
@@ -258,6 +426,43 @@ body {
 }
 
 /* Small phones */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .main-content {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .chores-section,
+  .calendar-section {
+    flex: auto;
+    min-height: 400px;
+  }
+
+  .calendar-wrapper {
+    min-height: 400px;
+  }
+
+  .user-profile {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .user-details {
+    width: 100%;
+  }
+}
+
 @media (max-width: 480px) {
   .header h1 {
     font-size: 1.75rem;
@@ -286,5 +491,31 @@ body {
     padding: 0.6rem 0.8rem;
     font-size: 0.8rem;
     border-width: 1px;
+  }
+
+  .header-content {
+    padding: 0;
+  }
+
+  .signin-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .user-profile {
+    padding: 0.4rem 0.75rem;
+  }
+
+  .user-avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .user-name {
+    font-size: 0.8rem;
+  }
+
+  .user-email {
+    font-size: 0.7rem;
   }
 }

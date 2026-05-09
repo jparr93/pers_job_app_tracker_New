@@ -13,12 +13,15 @@
 - [ ] Store user sessions in localStorage
 - [ ] Link calendar sync to Google account (optional feature)
 
-### 3. Calendar View
-- [ ] Display monthly calendar widget
-- [ ] Show chore completion history on calendar dates
-- [ ] Color-code calendar entries by person (Joe/Zoe)
-- [ ] Click on date to view completed chores that day
-- [ ] Optional: Sync calendar events to Google Calendar when signed in
+### 3. Calendar View 🚧 (In Progress)
+- [x] Set up Firebase Authentication
+- [x] Create Google Sign-In component
+- [x] Create embedded Google Calendar view
+- [x] Add 50/50 split layout (chores left, calendar right)
+- [x] Responsive layout (stacks on mobile)
+- [ ] User needs to add Firebase credentials to .env.local
+- [ ] Display user's personal Google Calendar after sign-in
+- [ ] (Optional) Add calendar event creation when chores complete
 
 ### 4. Skip Turn Feature ✅
 - [x] Add "Skip Turn" button on each chore

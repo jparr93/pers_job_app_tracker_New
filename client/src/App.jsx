@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import GoogleSignIn from './components/GoogleSignIn';
+import Calendar from './components/Calendar';
 
 const CHORES = [
   { id: 'bins', name: 'Empty Bins' },
@@ -52,6 +55,28 @@ export default function App() {
     }, {});
   });
 
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
+  // Load user from localStorage
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
+  // Save user to localStorage
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [user]);
+
   // Save to localStorage whenever chores change
   useEffect(() => {
     localStorage.setItem('chores', JSON.stringify(chores));
@@ -74,39 +99,50 @@ export default function App() {
             ...prev[choreId].completions,
             [currentPerson]: (prev[choreId].completions[currentPerson] || 0) + 1
           }
-        }
-      };
-    });
-  };
-
-  const handleSkip = (e, choreId) => {
-    e.stopPropagation();
-    setChores(prev => {
-      const currentPerson = prev[choreId].person;
-      
-      return {
-        ...prev,
-        [choreId]: {
-          ...prev[choreId],
-          skips: {
-            ...prev[choreId].skips,
-            [currentPerson]: (prev[choreId].skips[currentPerson] || 0) + 1
-          }
-        }
-      };
-    });
-  };
-
-  return (
-    <div className="app">
-      <header className="header">
-        <h1>🏠 Chore Tracker</h1>
+        }div className="header-content">
+          <h1>🏠 Chore Tracker</h1>
+          <GoogleSignIn user={user} onUserChange={setUser} />
+        </div>
       </header>
 
-      <main className="chores-container">
-        <div className="chores-grid">
-          {CHORES.map(chore => {
-            const state = chores[chore.id];
+      <main className="main-content">
+        <div className="chores-section">
+          <div className="chores-container">
+            <div className="chores-grid">
+              {CHORES.map(chore => {
+                const state = chores[chore.id];
+                const bgColor = COLORS[state.colorIndex];
+                const currentPersonCompletions = state.completions[state.person] || 0;
+
+                return (
+                  <button
+                    key={chore.id}
+                    className="chore-button"
+                    style={{ backgroundColor: bgColor }}
+                    onClick={() => handleChoreClick(chore.id)}
+                  >
+                    <div className="chore-button-row">
+                      <div className="chore-info">
+                        <div className="chore-name">{chore.name}</div>
+                        <div className="chore-person">{state.person}</div>
+                        <div className="chore-count">✓ {currentPersonCompletions}</div>
+                      </div>
+                      <button
+                        className="skip-btn"
+                        onClick={(e) => handleSkip(e, chore.id)}
+                      >
+                        Skip
+                      </button>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div className="calendar-section">
+          <Calendar user={user} />onst state = chores[chore.id];
             const bgColor = COLORS[state.colorIndex];
             const currentPersonCompletions = state.completions[state.person] || 0;
 
