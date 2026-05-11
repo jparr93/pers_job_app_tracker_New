@@ -374,6 +374,9 @@ body {
   padding: 1rem;
   border-bottom: 1px solid rgba(99, 102, 241, 0.2);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .calendar-header h2 {
@@ -383,15 +386,67 @@ body {
   margin: 0;
 }
 
-.calendar-wrapper {
-  flex: 1;
-  overflow: auto;
+.refresh-btn {
+  background: none;
+  border: none;
+  color: #f1f5f9;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: transform 0.3s ease;
 }
 
-.google-calendar-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
+.refresh-btn:hover {
+  transform: rotate(180deg);
+}
+
+.calendar-events {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.event-item {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 8px;
+  padding: 0.75rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  transition: all 0.3s ease;
+}
+
+.event-item:hover {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.5);
+  transform: translateX(4px);
+}
+
+.event-time {
+  font-size: 0.85rem;
+  color: #f59e0b;
+  font-weight: 600;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.event-title {
+  color: #e5e7eb;
+  font-size: 0.95rem;
+  flex: 1;
+  word-break: break-word;
+}
+
+.loading,
+.no-events {
+  text-align: center;
+  color: #94a3b8;
+  padding: 2rem 1rem;
+  font-size: 0.95rem;
 }
 
 .calendar-placeholder {
