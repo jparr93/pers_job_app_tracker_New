@@ -1,26 +1,42 @@
 import { useState } from 'react';
-import { GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode';
+import { useGoogleLogin } from '@react-oauth/google';
 
 export default function GoogleSignIn({ user, onUserChange }) {
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSuccess = (credentialResponse) => {
-    try {
-      const decoded = jwtDecode(credentialResponse.credential);
-      const userData = {
-        email: decoded.email,
-        displayName: decoded.name,
-        photoURL: decoded.picture,
-        token: credentialResponse.credential
-      };
-      setError(null);
-      onUserChange(userData);
-    } catch (err) {
-      setError('Failed to sign in. Please try again.');
-      console.error('Sign-in error:', err);
-    }
-  };
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        setLoading(true);
+        // Fetch user info with the access token
+        const response = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+          headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+        });
+        
+        const userInfo = await response.json();
+        
+        const userData = {
+          email: userInfo.email,
+          displayName: userInfo.name,
+          photoURL: userInfo.picture,
+          token: tokenResponse.access_token,
+        };
+        
+        setError(null);
+        onUserChange(userData);
+      } catch (err) {
+        console.error('Error fetching user info:', err);
+        setError('Failed to sign in. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    },
+    onError: () => {
+      setError('Login failed');
+    },
+    scope: 'openid profile email https://www.googleapis.com/auth/calendar.readonly',
+  });
 
   const handleSignOut = () => {
     onUserChange(null);
@@ -52,11 +68,13 @@ export default function GoogleSignIn({ user, onUserChange }) {
           </button>
         </div>
       ) : (
-        <GoogleLogin
-          onSuccess={handleSuccess}
-          onError={() => setError('Login failed')}
-          theme="dark"
-        />
+        <button 
+          className="signin-btn"
+          onClick={() => login()}
+          disabled={loading}
+        >
+          {loading ? 'Signing in...' : 'Sign in with Google'}
+        </button>
       )}
       {error && <div className="signin-error">{error}</div>}
     </div>
